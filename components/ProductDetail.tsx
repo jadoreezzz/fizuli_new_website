@@ -1,0 +1,261 @@
+'use client'
+
+import Image from 'next/image'
+import Link from 'next/link'
+import { useState } from 'react'
+import { Product } from '@/types'
+
+interface ProductDetailProps {
+  product: Product
+  recommended?: Product[]
+}
+
+const TABS = ['ИНФОРМАЦИЯ О ТОВАРЕ', 'ДОСТАВКА И ВОЗВРАТ'] as const
+
+export default function ProductDetail({ product, recommended = [] }: ProductDetailProps) {
+  const images = product.images ?? []
+  const variants = product.product_variants ?? []
+
+  const [selectedSize, setSelectedSize] = useState<string | null>(null)
+  const [activeTab, setActiveTab] = useState<0 | 1>(0)
+
+  const price = new Intl.NumberFormat('ru-RU', {
+    style: 'currency',
+    currency: 'RUB',
+    maximumFractionDigits: 0,
+  }).format(product.price)
+
+  // editorial images = everything after the first
+  const editorialImages = images.slice(1)
+
+  // group into chunks of 3: [left-top, left-bottom, right-tall]
+  const groups: string[][] = []
+  for (let i = 0; i < editorialImages.length; i += 3) {
+    groups.push(editorialImages.slice(i, i + 3))
+  }
+
+  return (
+    <div className="bg-white min-h-screen">
+
+      {/* TOP SECTION — main image + info panel */}
+      <div className="flex flex-col lg:flex-row">
+
+        {/* LEFT — main image */}
+        <div className="lg:w-1/2">
+          <div className="relative aspect-[3/4] bg-[#f5f5f5]">
+            {images[0] && (
+              <Image
+                src={images[0]}
+                alt={product.name}
+                fill
+                priority
+                sizes="50vw"
+                className="object-cover"
+              />
+            )}
+          </div>
+        </div>
+
+        {/* RIGHT — sticky info */}
+        <div className="lg:w-1/2 lg:sticky lg:top-0 lg:self-start px-8 py-10 flex flex-col">
+
+          <div className="flex items-start justify-between mb-1">
+            <div>
+              <p className="text-[12px] uppercase tracking-[0.18em] text-black font-medium">
+                {product.name}
+              </p>
+              <p className="text-[12px] uppercase tracking-[0.18em] text-gray-400 mt-0.5">
+                {product.categories?.name ?? ''}
+              </p>
+            </div>
+            <p className="text-[12px] tracking-wide text-black">{price}</p>
+          </div>
+
+          <div className="border-t border-gray-200 my-6" />
+
+          {/* Sizes */}
+          <div>
+            <div className="flex items-center justify-between mb-3">
+              <p className="text-[12px] uppercase tracking-widest text-gray-400">Размер</p>
+              <button className="text-[12px] uppercase tracking-widest text-gray-400 underline underline-offset-2">
+                Таблица размеров
+              </button>
+            </div>
+            <div className="flex flex-wrap gap-1">
+              {variants.map((v) => {
+                const outOfStock = v.stock === 0
+                const selected = selectedSize === v.size
+                return (
+                  <button
+                    key={v.id}
+                    onClick={() => !outOfStock && setSelectedSize(v.size)}
+                    disabled={outOfStock}
+                    className={`
+                      h-9 min-w-[44px] px-3 text-[12px] tracking-widest uppercase border transition-colors duration-150
+                      ${selected
+                        ? 'border-black bg-black text-white'
+                        : outOfStock
+                          ? 'border-gray-200 text-gray-300 cursor-not-allowed'
+                          : 'border-gray-300 text-black hover:border-black'
+                      }
+                    `}
+                  >
+                    {v.size}
+                  </button>
+                )
+              })}
+            </div>
+          </div>
+
+          <button className="w-full mt-6 h-12 bg-black text-white text-[12px] uppercase tracking-[0.2em] hover:bg-gray-900 transition-colors duration-150">
+            Добавить в корзину
+          </button>
+
+          <div className="border-t border-gray-200 mt-8" />
+
+          {/* Tabs */}
+          <div className="flex gap-8 mt-6">
+            {TABS.map((tab, i) => (
+              <button
+                key={tab}
+                onClick={() => setActiveTab(i as 0 | 1)}
+                className={`text-[12px] uppercase tracking-widest pb-1 border-b transition-colors duration-150 ${
+                  activeTab === i
+                    ? 'border-black text-black'
+                    : 'border-transparent text-gray-400 hover:text-black'
+                }`}
+              >
+                {tab}
+              </button>
+            ))}
+          </div>
+
+          <div className="mt-5 text-[12px] leading-6 text-gray-600">
+            {activeTab === 0 ? (
+              <p>{product.description ?? 'Описание отсутствует.'}</p>
+            ) : (
+              <div className="space-y-5">
+                <div>
+                  <p className="text-[12px] uppercase tracking-widest text-black mb-2">Курьерская доставка — СДЭК</p>
+                  <p className="mb-1">Осуществляется по 100% предоплате.</p>
+                  <ul className="list-disc list-inside space-y-0.5 text-gray-500">
+                    <li>Стоимость зависит от удалённости пункта СДЭК</li>
+                    <li>При заказе свыше 15 000 ₽ — доставка бесплатная</li>
+                    <li>Время работы: ежедневно с 12:00 до 17:00</li>
+                  </ul>
+                  <table className="mt-3 w-full text-[12px]">
+                    <tbody>
+                      <tr className="border-t border-gray-100"><td className="py-1.5 text-gray-500 pr-4">Товар есть на складе</td><td className="py-1.5">1–2 рабочих дня</td></tr>
+                      <tr className="border-t border-gray-100"><td className="py-1.5 text-gray-500 pr-4">Требуется отшив</td><td className="py-1.5">до 30 рабочих дней</td></tr>
+                      <tr className="border-t border-gray-100 border-b border-gray-100"><td className="py-1.5 text-gray-500 pr-4">Период распродаж</td><td className="py-1.5">+3–4 рабочих дня</td></tr>
+                    </tbody>
+                  </table>
+                </div>
+
+                <div>
+                  <p className="text-[12px] uppercase tracking-widest text-black mb-2">Самовывоз</p>
+                  <p className="mb-1">Москва, Остаповский проезд, д. 3с6</p>
+                  <ul className="list-disc list-inside space-y-0.5 text-gray-500">
+                    <li>Самовывоз бесплатный</li>
+                    <li>Менеджер свяжется, когда заказ будет готов</li>
+                    <li>Неоплаченный заказ хранится 24 часа</li>
+                    <li>Оплаченный заказ хранится 7 календарных дней</li>
+                  </ul>
+                </div>
+
+                <div>
+                  <p className="text-[12px] uppercase tracking-widest text-black mb-2">Международная доставка — EMS</p>
+                  <p className="text-gray-500">Стоимость рассчитывается индивидуально.</p>
+                </div>
+              </div>
+            )}
+          </div>
+
+        </div>
+      </div>
+
+      {/* EDITORIAL GRID */}
+      {groups.map((group, gi) => {
+        const [a, b, c] = group
+
+        // Full group: 2 left stacked + 1 right tall
+        if (a && b && c) {
+          return (
+            <div key={gi} className="grid grid-cols-2" style={{ gridTemplateRows: '66.67vw 66.67vw' }}>
+              {/* left-top */}
+              <div className="relative bg-[#f5f5f5]" style={{ height: '66.67vw' }}>
+                <Image src={a} alt={product.name} fill sizes="50vw" className="object-cover" />
+              </div>
+              {/* right — spans 2 rows */}
+              <div className="relative bg-[#f5f5f5]" style={{ gridRow: '1 / 3', height: '133.33vw' }}>
+                <Image src={c} alt={product.name} fill sizes="50vw" className="object-cover" />
+              </div>
+              {/* left-bottom */}
+              <div className="relative bg-[#f5f5f5]" style={{ height: '66.67vw' }}>
+                <Image src={b} alt={product.name} fill sizes="50vw" className="object-cover" />
+              </div>
+            </div>
+          )
+        }
+
+        // Partial group — just render remaining side by side
+        return (
+          <div key={gi} className="grid grid-cols-2">
+            {group.map((src, i) => (
+              <div key={i} className="relative aspect-[3/4] bg-[#f5f5f5]">
+                <Image src={src} alt={product.name} fill sizes="50vw" className="object-cover" />
+              </div>
+            ))}
+          </div>
+        )
+      })}
+
+      {/* RECOMMENDED PRODUCTS */}
+      {recommended.length > 0 && (
+        <div className="mt-24 pb-16">
+          <p className="text-center text-[12px] uppercase tracking-[0.25em] text-gray-400 mb-10">
+            Рекомендуем
+          </p>
+          <div className="grid grid-cols-2 gap-x-0 gap-y-16 md:grid-cols-3 lg:grid-cols-4">
+            {recommended.map((p) => {
+              const img = p.images?.[0] ?? null
+              const recPrice = new Intl.NumberFormat('ru-RU', {
+                style: 'currency',
+                currency: 'RUB',
+                maximumFractionDigits: 0,
+              }).format(p.price)
+
+              return (
+                <Link key={p.id} href={`/catalog/${p.slug}`} className="group block">
+                  <div className="relative aspect-[3/4] bg-[#f5f5f5] overflow-hidden">
+                    {img && (
+                      <Image
+                        src={img}
+                        alt={p.name}
+                        fill
+                        sizes="25vw"
+                        className="object-cover transition-transform duration-200 ease-in-out group-hover:scale-115"
+                      />
+                    )}
+                  </div>
+                  <div className="mt-3 flex items-start justify-between gap-2 px-3">
+                    <div className="min-w-0">
+                      <p className="text-[12px] uppercase tracking-widest text-gray-400 truncate">
+                        {p.categories?.name ?? ''}
+                      </p>
+                      <p className="mt-0.5 text-[12px] tracking-wide text-gray-900 truncate">
+                        {p.name}
+                      </p>
+                    </div>
+                    <p className="shrink-0 text-[12px] tracking-wide text-gray-900">{recPrice}</p>
+                  </div>
+                </Link>
+              )
+            })}
+          </div>
+        </div>
+      )}
+
+    </div>
+  )
+}
