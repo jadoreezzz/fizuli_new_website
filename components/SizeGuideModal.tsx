@@ -77,10 +77,10 @@ export default function SizeGuideModal({ onClose }: SizeGuideModalProps) {
               <tbody>
                 {PANTS.map(r => (
                   <tr key={r.size} className="border-b border-gray-100">
-                    <td className="py-2.5 font-medium">{r.size}</td>
-                    <td className="py-2.5">{r.pot}</td>
-                    <td className="py-2.5">{r.pob}</td>
-                    <td className="py-2.5">{r.dbpb}</td>
+                    <td className="py-2.5 font-bold text-black">{r.size}</td>
+                    <td className="py-2.5 text-black">{r.pot}</td>
+                    <td className="py-2.5 text-black">{r.pob}</td>
+                    <td className="py-2.5 text-black">{r.dbpb}</td>
                   </tr>
                 ))}
               </tbody>
@@ -108,11 +108,11 @@ export default function SizeGuideModal({ onClose }: SizeGuideModalProps) {
               <tbody>
                 {JACKET.map(r => (
                   <tr key={r.size} className="border-b border-gray-100">
-                    <td className="py-2.5 font-medium">{r.size}</td>
-                    <td className="py-2.5">{r.pog}</td>
-                    <td className="py-2.5">{r.dspt}</td>
-                    <td className="py-2.5">{r.dr}</td>
-                    <td className="py-2.5">{r.vv}</td>
+                    <td className="py-2.5 font-bold text-black">{r.size}</td>
+                    <td className="py-2.5 text-black">{r.pog}</td>
+                    <td className="py-2.5 text-black">{r.dspt}</td>
+                    <td className="py-2.5 text-black">{r.dr}</td>
+                    <td className="py-2.5 text-black">{r.vv}</td>
                   </tr>
                 ))}
               </tbody>
@@ -139,8 +139,8 @@ export default function SizeGuideModal({ onClose }: SizeGuideModalProps) {
               <tbody>
                 {WEIGHT.map(r => (
                   <tr key={r.size} className="border-b border-gray-100">
-                    <td className="py-2.5 font-medium">{r.size}</td>
-                    <td className="py-2.5">{r.g} г</td>
+                    <td className="py-2.5 font-bold text-black">{r.size}</td>
+                    <td className="py-2.5 text-black">{r.g} г</td>
                   </tr>
                 ))}
               </tbody>
