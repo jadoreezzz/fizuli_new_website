@@ -1,9 +1,10 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import ScrollToTop from "@/components/ScrollToTop";
+import StickyNav from "@/components/StickyNav";
+import { CartProvider } from "@/lib/cart";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -28,13 +29,15 @@ export default function RootLayout({
   return (
     <html lang="ru" className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}>
       <body className="min-h-full flex flex-col bg-white">
-        <Header />
-        <div className="flex-1 pt-12">
-          {children}
-        </div>
-        <div className="h-32 bg-white" />
-        <Footer />
-        <ScrollToTop />
+        <CartProvider>
+          <StickyNav />
+          <div className="flex-1">
+            {children}
+          </div>
+          <div className="h-32 bg-white" />
+          <Footer />
+          <ScrollToTop />
+        </CartProvider>
       </body>
     </html>
   );

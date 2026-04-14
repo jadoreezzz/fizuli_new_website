@@ -4,26 +4,29 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { useState } from 'react'
 import { Product } from '@/types'
+import { COLOR_MAP, isLightColor } from '@/lib/colors'
+import { useCart } from '@/lib/cart'
 
 interface ProductDetailProps {
   product: Product
   recommended?: Product[]
+  colorVariants?: Product[]
 }
 
 const TABS = ['ИНФОРМАЦИЯ О ТОВАРЕ', 'ДОСТАВКА И ВОЗВРАТ'] as const
 
-export default function ProductDetail({ product, recommended = [] }: ProductDetailProps) {
+
+export default function ProductDetail({ product, recommended = [], colorVariants = [] }: ProductDetailProps) {
   const images = product.images ?? []
   const variants = product.product_variants ?? []
 
   const [selectedSize, setSelectedSize] = useState<string | null>(null)
   const [activeTab, setActiveTab] = useState<0 | 1>(0)
+  const [qty, setQty] = useState(1)
+  const [added, setAdded] = useState(false)
+  const { addItem } = useCart()
 
-  const price = new Intl.NumberFormat('ru-RU', {
-    style: 'currency',
-    currency: 'RUB',
-    maximumFractionDigits: 0,
-  }).format(product.price)
+  const price = new Intl.NumberFormat('ru-RU', { maximumFractionDigits: 0 }).format(product.price) + ' р.'
 
   // editorial images = everything after the first
   const editorialImages = images.slice(1)
@@ -71,6 +74,38 @@ export default function ProductDetail({ product, recommended = [] }: ProductDeta
             <p className="text-[12px] tracking-wide text-black">{price}</p>
           </div>
 
+          {/* Color variants */}
+          {colorVariants.length > 1 && (
+            <div className="mt-6">
+              <p className="text-[12px] uppercase tracking-widest text-gray-400 mb-3">
+                Цвет:{' '}
+                <span className="text-black">{product.color ?? ''}</span>
+              </p>
+              <div className="flex flex-wrap gap-2">
+                {colorVariants.map((v) => {
+                  const isCurrent = v.id === product.id
+                  const hex = COLOR_MAP[(v.color ?? '').toLowerCase()] ?? '#cccccc'
+                  const isLight = isLightColor(hex)
+                  return (
+                    <Link
+                      key={v.id}
+                      href={`/catalog/${v.slug}`}
+                      title={v.color ?? v.name}
+                      className={`block w-7 h-7 rounded-full transition-all duration-150 ${
+                        isCurrent
+                          ? 'ring-2 ring-black ring-offset-2'
+                          : isLight
+                            ? 'ring-1 ring-gray-300 hover:ring-gray-500 hover:ring-offset-1'
+                            : 'ring-1 ring-transparent hover:ring-gray-400 hover:ring-offset-1'
+                      }`}
+                      style={{ backgroundColor: hex }}
+                    />
+                  )
+                })}
+              </div>
+            </div>
+          )}
+
           <div className="border-t border-gray-200 my-6" />
 
           {/* Sizes */}
@@ -107,9 +142,52 @@ export default function ProductDetail({ product, recommended = [] }: ProductDeta
             </div>
           </div>
 
-          <button className="w-full mt-6 h-12 bg-black text-white text-[12px] uppercase tracking-[0.2em] hover:bg-gray-900 transition-colors duration-150">
-            Добавить в корзину
-          </button>
+          {!selectedSize ? (
+            <div className="mt-6 h-12 flex items-center justify-center border border-gray-200">
+              <p className="text-[12px] uppercase tracking-[0.2em] text-gray-400">Выберите размер</p>
+            </div>
+          ) : (
+            <div className="flex gap-3 mt-6">
+              <div className="flex items-center border border-gray-200">
+                <button
+                  onClick={() => setQty(q => Math.max(1, q - 1))}
+                  className="w-10 h-12 flex items-center justify-center text-[16px] text-gray-500 hover:text-black transition-colors"
+                >
+                  −
+                </button>
+                <span className="w-8 text-center text-[12px] tracking-wide">{qty}</span>
+                <button
+                  onClick={() => setQty(q => q + 1)}
+                  className="w-10 h-12 flex items-center justify-center text-[16px] text-gray-500 hover:text-black transition-colors"
+                >
+                  +
+                </button>
+              </div>
+
+              <button
+                onClick={() => {
+                  for (let i = 0; i < qty; i++) {
+                    addItem({
+                      productId: product.id,
+                      slug: product.slug,
+                      name: product.name,
+                      price: product.price,
+                      image: product.images?.[0] ?? '',
+                      size: selectedSize,
+                      color: product.color,
+                    })
+                  }
+                  setAdded(true)
+                  setTimeout(() => setAdded(false), 2000)
+                }}
+                className={`flex-1 h-12 text-[12px] uppercase tracking-[0.2em] transition-colors duration-150 ${
+                  added ? 'bg-gray-700 text-white' : 'bg-black text-white hover:bg-gray-900'
+                }`}
+              >
+                {added ? 'Добавлено ✓' : 'Добавить в корзину'}
+              </button>
+            </div>
+          )}
 
           <div className="border-t border-gray-200 mt-8" />
 
@@ -219,11 +297,7 @@ export default function ProductDetail({ product, recommended = [] }: ProductDeta
           <div className="grid grid-cols-2 gap-x-0 gap-y-16 md:grid-cols-3 lg:grid-cols-4">
             {recommended.map((p) => {
               const img = p.images?.[0] ?? null
-              const recPrice = new Intl.NumberFormat('ru-RU', {
-                style: 'currency',
-                currency: 'RUB',
-                maximumFractionDigits: 0,
-              }).format(p.price)
+              const recPrice = new Intl.NumberFormat('ru-RU', { maximumFractionDigits: 0 }).format(p.price) + ' р.'
 
               return (
                 <Link key={p.id} href={`/catalog/${p.slug}`} className="group block">

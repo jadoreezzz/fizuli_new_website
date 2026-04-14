@@ -18,7 +18,7 @@ insert into categories (id, name, slug) values
 -- 3. Товары
 
 -- Футболки
-insert into products (id, name, slug, description, price, images, category_id) values
+insert into products (id, name, slug, description, price, images, category_id, color, model_slug) values
   ('f1000000-0000-0000-0000-000000000001',
    'Футболка с необработанными краями — красный',
    'futbolka-s-neobrabotannymi-krayami-krasnyy',
@@ -29,7 +29,8 @@ insert into products (id, name, slug, description, price, images, category_id) v
      'https://static.tildacdn.com/stor6361-6165-4138-b533-343931613762/55089263.jpg',
      'https://static.tildacdn.com/stor3365-3961-4661-b866-626135633161/55339969.jpg'
    ],
-   'e1000000-0000-0000-0000-000000000001'),
+   'e1000000-0000-0000-0000-000000000001',
+   'красный', 'futbolka-s-neobrabotannymi-krayami'),
 
   ('f1000000-0000-0000-0000-000000000002',
    'Футболка с необработанными краями — коричневый',
@@ -41,7 +42,8 @@ insert into products (id, name, slug, description, price, images, category_id) v
      'https://static.tildacdn.com/stor3837-3132-4135-b165-316433343132/89873152.jpg',
      'https://static.tildacdn.com/stor3231-3361-4732-b531-386535373530/25113804.jpg'
    ],
-   'e1000000-0000-0000-0000-000000000001'),
+   'e1000000-0000-0000-0000-000000000001',
+   'коричневый', 'futbolka-s-neobrabotannymi-krayami'),
 
   ('f1000000-0000-0000-0000-000000000003',
    'Футболка с необработанными краями — серый',
@@ -53,7 +55,8 @@ insert into products (id, name, slug, description, price, images, category_id) v
      'https://static.tildacdn.com/stor3035-3631-4934-a331-396661663533/16614828.jpg',
      'https://static.tildacdn.com/stor3764-6635-4161-b033-306538326430/98622460.jpg'
    ],
-   'e1000000-0000-0000-0000-000000000001'),
+   'e1000000-0000-0000-0000-000000000001',
+   'серый', 'futbolka-s-neobrabotannymi-krayami'),
 
   ('f1000000-0000-0000-0000-000000000004',
    'Футболка с необработанными краями — молочный',
@@ -65,7 +68,8 @@ insert into products (id, name, slug, description, price, images, category_id) v
      'https://static.tildacdn.com/stor3536-3632-4236-b035-313063336530/51875728.jpg',
      'https://static.tildacdn.com/stor6130-3362-4165-b764-636434303533/71263977.jpg'
    ],
-   'e1000000-0000-0000-0000-000000000001'),
+   'e1000000-0000-0000-0000-000000000001',
+   'молочный', 'futbolka-s-neobrabotannymi-krayami'),
 
   ('f1000000-0000-0000-0000-000000000005',
    'Футболка с необработанными краями — черный',
@@ -77,7 +81,8 @@ insert into products (id, name, slug, description, price, images, category_id) v
      'https://static.tildacdn.com/stor3635-3136-4939-a132-646630366230/13844544.jpg',
      'https://static.tildacdn.com/stor3535-3032-4436-b937-656231346665/88851975.jpg'
    ],
-   'e1000000-0000-0000-0000-000000000001'),
+   'e1000000-0000-0000-0000-000000000001',
+   'черный', 'futbolka-s-neobrabotannymi-krayami'),
 
 -- Анораки
   ('f1000000-0000-0000-0000-000000000006',
@@ -90,7 +95,8 @@ insert into products (id, name, slug, description, price, images, category_id) v
      'https://static.tildacdn.com/stor6535-6539-4836-b237-393532643231/6674d9283bb34bf1f1ef130c5da3ad35.jpg',
      'https://static.tildacdn.com/stor3839-6136-4138-b165-316139303436/3f2c7b812f455a085c976d76e9a3c171.jpg'
    ],
-   'e1000000-0000-0000-0000-000000000002'),
+   'e1000000-0000-0000-0000-000000000002',
+   'черный', 'anorak'),
 
   ('f1000000-0000-0000-0000-000000000007',
    'Анорак — молочный',
@@ -102,7 +108,8 @@ insert into products (id, name, slug, description, price, images, category_id) v
      'https://static.tildacdn.com/stor3730-3634-4962-a333-373339376639/93206972b0ad15229eef4fd0bb3372a5.jpg',
      'https://static.tildacdn.com/stor3938-3961-4433-b439-626239323931/4016678418a5c2a8189662ad33ec0318.jpg'
    ],
-   'e1000000-0000-0000-0000-000000000002'),
+   'e1000000-0000-0000-0000-000000000002',
+   'молочный', 'anorak'),
 
   ('f1000000-0000-0000-0000-000000000008',
    'Анорак — красный',
@@ -114,7 +121,8 @@ insert into products (id, name, slug, description, price, images, category_id) v
      'https://static.tildacdn.com/stor3238-6261-4132-b264-306564613163/7ea0c5591e17090ea0c90585cdfacf69.jpg',
      'https://static.tildacdn.com/stor3636-6433-4430-b231-663330353937/d55bde4240c207f1dce7024cf43d881e.jpg'
    ],
-   'e1000000-0000-0000-0000-000000000002'),
+   'e1000000-0000-0000-0000-000000000002',
+   'красный', 'anorak'),
 
   ('f1000000-0000-0000-0000-000000000009',
    'Анорак — темно-серый',
@@ -126,7 +134,8 @@ insert into products (id, name, slug, description, price, images, category_id) v
      'https://static.tildacdn.com/stor3664-3362-4638-b435-326436383066/1449d7675e3380b4c9e2d1fe7e09809f.jpg',
      'https://static.tildacdn.com/stor3266-6662-4534-b039-643736336539/c18855f3d254bc65e13771796dd64a3b.jpg'
    ],
-   'e1000000-0000-0000-0000-000000000002'),
+   'e1000000-0000-0000-0000-000000000002',
+   'темно-серый', 'anorak'),
 
   ('f1000000-0000-0000-0000-000000000010',
    'Анорак — коричневый',
@@ -138,7 +147,8 @@ insert into products (id, name, slug, description, price, images, category_id) v
      'https://static.tildacdn.com/stor6339-3165-4334-b635-306135663439/a2f138285108adefefcd586e827f7c2b.jpg',
      'https://static.tildacdn.com/stor3936-6266-4465-a631-633938643639/833d04b0c55fad07aa7258d1556aeec2.jpg'
    ],
-   'e1000000-0000-0000-0000-000000000002'),
+   'e1000000-0000-0000-0000-000000000002',
+   'коричневый', 'anorak'),
 
 -- Худи и свитшоты
   ('f1000000-0000-0000-0000-000000000011',
@@ -151,7 +161,8 @@ insert into products (id, name, slug, description, price, images, category_id) v
      'https://static.tildacdn.com/stor3465-3634-4063-a262-326533646164/33d8b783c1a64534e4ae3aeafc20fc3a.jpg',
      'https://static.tildacdn.com/stor3238-3663-4334-b235-353031633662/84102982cc27ca49979a76b9ee8093c8.jpg'
    ],
-   'e1000000-0000-0000-0000-000000000003'),
+   'e1000000-0000-0000-0000-000000000003',
+   'черный', 'zip-hudi'),
 
   ('f1000000-0000-0000-0000-000000000012',
    'Зип-Худи — бежевый',
@@ -163,7 +174,8 @@ insert into products (id, name, slug, description, price, images, category_id) v
      'https://static.tildacdn.com/stor6337-3266-4566-b132-326139383330/6eae6562f4efad2dbe384d0441939d9b.jpg',
      'https://static.tildacdn.com/stor6361-3835-4361-b265-653837636263/c00ae6981cd290053ac85888d48dd0e1.jpg'
    ],
-   'e1000000-0000-0000-0000-000000000003'),
+   'e1000000-0000-0000-0000-000000000003',
+   'бежевый', 'zip-hudi'),
 
   ('f1000000-0000-0000-0000-000000000013',
    'Зип-Худи — серый меланж',
@@ -175,7 +187,8 @@ insert into products (id, name, slug, description, price, images, category_id) v
      'https://static.tildacdn.com/stor3931-6632-4233-b164-656638376564/98586c950f72be5248736bb6b02ccace.jpg',
      'https://static.tildacdn.com/stor6439-3736-4236-b634-646439363365/6b2b8dc9afbc25bb4c658eb3ae0e07bb.jpg'
    ],
-   'e1000000-0000-0000-0000-000000000003'),
+   'e1000000-0000-0000-0000-000000000003',
+   'серый меланж', 'zip-hudi'),
 
   ('f1000000-0000-0000-0000-000000000014',
    'Зип-Худи — коричневый',
@@ -187,7 +200,8 @@ insert into products (id, name, slug, description, price, images, category_id) v
      'https://static.tildacdn.com/stor3333-3763-4066-a630-383431393462/ae8c0d937df3df52c76407e665b09e16.jpg',
      'https://static.tildacdn.com/stor6461-6435-4332-b234-386365643761/33074819f82da8467810534c2a1058b5.jpg'
    ],
-   'e1000000-0000-0000-0000-000000000003'),
+   'e1000000-0000-0000-0000-000000000003',
+   'коричневый', 'zip-hudi'),
 
   ('f1000000-0000-0000-0000-000000000015',
    'Свитшот — черный',
@@ -199,7 +213,8 @@ insert into products (id, name, slug, description, price, images, category_id) v
      'https://static.tildacdn.com/stor3162-3762-4032-b234-396533386235/f68d6684260414a69f1d7f9b5ab78bc5.jpg',
      'https://static.tildacdn.com/stor6239-3531-4965-a337-613864343664/9185d1c3e6727e0d010131cd8201f9d6.jpg'
    ],
-   'e1000000-0000-0000-0000-000000000003');
+   'e1000000-0000-0000-0000-000000000003',
+   'черный', 'svitshot');
 
 -- 4. Варианты размеров
 

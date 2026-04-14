@@ -32,6 +32,17 @@ export default async function ProductPage({ params }: PageProps) {
     )
   }
 
+  // Fetch color variants (same model_slug, different products)
+  let colorVariants: Product[] = []
+  if (product.model_slug) {
+    const { data: variants } = await supabase
+      .from('products')
+      .select('id, name, slug, color, images, categories(id, name, slug), model_slug')
+      .eq('model_slug', product.model_slug)
+      .order('created_at', { ascending: true })
+    colorVariants = (variants ?? []) as unknown as Product[]
+  }
+
   // Fetch 4 recommended products (same category, excluding current)
   const { data: recommended } = await supabase
     .from('products')
@@ -52,5 +63,5 @@ export default async function ProductPage({ params }: PageProps) {
     recommendedProducts = [...recommendedProducts, ...((others ?? []) as Product[])]
   }
 
-  return <ProductDetail product={product} recommended={recommendedProducts} />
+  return <ProductDetail product={product} recommended={recommendedProducts} colorVariants={colorVariants} />
 }

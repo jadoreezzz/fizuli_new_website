@@ -16,6 +16,15 @@ export default async function CatalogPage() {
 
   const items = (products ?? []) as Product[]
 
+  // Group color variants by model_slug
+  const byModel = new Map<string, { id: string; slug: string; color: string | null }[]>()
+  for (const p of items) {
+    if (!p.model_slug) continue
+    const group = byModel.get(p.model_slug) ?? []
+    group.push({ id: p.id, slug: p.slug, color: p.color })
+    byModel.set(p.model_slug, group)
+  }
+
   return (
     <main className="bg-white min-h-screen">
       <div className="px-6 py-16">
@@ -29,7 +38,11 @@ export default async function CatalogPage() {
       ) : (
         <div className="grid grid-cols-2 gap-x-0 gap-y-16 md:grid-cols-3 lg:grid-cols-4">
           {items.map((product) => (
-            <ProductCard key={product.id} product={product} />
+            <ProductCard
+              key={product.id}
+              product={product}
+              colorVariants={product.model_slug ? byModel.get(product.model_slug) : undefined}
+            />
           ))}
         </div>
       )}

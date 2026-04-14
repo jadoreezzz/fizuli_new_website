@@ -28,6 +28,8 @@ export interface Product {
   images: string[]
   category_id: string | null
   collection_id: string | null
+  color: string | null
+  model_slug: string | null
   created_at: string
   categories: Category | null
   product_variants?: ProductVariant[]

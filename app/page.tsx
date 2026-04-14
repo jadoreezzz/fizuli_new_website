@@ -1,7 +1,6 @@
 import Link from 'next/link'
 import { supabase } from '@/lib/supabase'
 import ProductCard from '@/components/ProductCard'
-import Marquee from '@/components/Marquee'
 import { Product } from '@/types'
 
 export const revalidate = 60
@@ -15,11 +14,17 @@ export default async function Home() {
 
   const items = (products ?? []) as Product[]
 
+  // Group color variants by model_slug (from items in preview)
+  const byModel = new Map<string, { id: string; slug: string; color: string | null }[]>()
+  for (const p of items) {
+    if (!p.model_slug) continue
+    const group = byModel.get(p.model_slug) ?? []
+    group.push({ id: p.id, slug: p.slug, color: p.color })
+    byModel.set(p.model_slug, group)
+  }
+
   return (
     <main className="bg-white">
-
-      {/* MARQUEE */}
-      <Marquee />
 
       {/* HERO */}
       <section className="relative w-full h-screen bg-black overflow-hidden">
@@ -54,7 +59,11 @@ export default async function Home() {
         </div>
         <div className="grid grid-cols-2 gap-x-0 gap-y-16 md:grid-cols-3 lg:grid-cols-4">
           {items.map((product) => (
-            <ProductCard key={product.id} product={product} />
+            <ProductCard
+              key={product.id}
+              product={product}
+              colorVariants={product.model_slug ? byModel.get(product.model_slug) : undefined}
+            />
           ))}
         </div>
       </section>
