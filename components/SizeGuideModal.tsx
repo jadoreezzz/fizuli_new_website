@@ -47,7 +47,7 @@ export default function SizeGuideModal({ onClose }: SizeGuideModalProps) {
       <div className="absolute inset-0 bg-black/40" onClick={onClose} />
 
       {/* Modal */}
-      <div className="relative bg-white w-full max-w-lg max-h-[85vh] overflow-y-auto">
+      <div className="relative bg-white w-full max-w-lg max-h-[85vh] overflow-y-auto" style={{ fontFamily: 'monospace' }}>
         {/* Header */}
         <div className="flex items-center justify-between px-8 py-6 border-b border-gray-100">
           <p className="text-[11px] uppercase tracking-[0.25em] text-black">Таблица размеров</p>
