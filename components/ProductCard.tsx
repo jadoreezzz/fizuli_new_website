@@ -49,7 +49,7 @@ export default function ProductCard({ product, colorVariants = [] }: ProductCard
                 sizes="25vw"
                 className="object-cover"
                 style={{
-                  transform: hovered ? 'scale(1.15)' : 'scale(1)',
+                  transform: hovered ? 'scale(1.05)' : 'scale(1)',
                   transition: 'transform 200ms ease-in-out',
                   visibility: hovered && image2 ? 'hidden' : 'visible',
                 }}
@@ -63,7 +63,7 @@ export default function ProductCard({ product, colorVariants = [] }: ProductCard
                 sizes="25vw"
                 className="object-cover"
                 style={{
-                  transform: hovered ? 'scale(1.15)' : 'scale(1)',
+                  transform: hovered ? 'scale(1.05)' : 'scale(1)',
                   transition: 'transform 200ms ease-in-out',
                   visibility: hovered ? 'visible' : 'hidden',
                 }}

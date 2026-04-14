@@ -63,5 +63,31 @@ export default async function ProductPage({ params }: PageProps) {
     recommendedProducts = [...recommendedProducts, ...((others ?? []) as Product[])]
   }
 
-  return <ProductDetail product={product} recommended={recommendedProducts} colorVariants={colorVariants} />
+  // Build color variant map for recommended products
+  const modelSlugs = [...new Set(recommendedProducts.map(p => p.model_slug).filter(Boolean))]
+  let allModelProducts: Product[] = []
+  if (modelSlugs.length > 0) {
+    const { data: modelData } = await supabase
+      .from('products')
+      .select('id, slug, color, model_slug, images, categories(id, name, slug)')
+      .in('model_slug', modelSlugs as string[])
+    allModelProducts = (modelData ?? []) as unknown as Product[]
+  }
+
+  const byModel = new Map<string, { id: string; slug: string; color: string | null }[]>()
+  for (const p of allModelProducts) {
+    if (!p.model_slug) continue
+    const group = byModel.get(p.model_slug) ?? []
+    group.push({ id: p.id, slug: p.slug, color: p.color })
+    byModel.set(p.model_slug, group)
+  }
+
+  return (
+    <ProductDetail
+      product={product}
+      recommended={recommendedProducts}
+      recommendedColorVariants={byModel}
+      colorVariants={colorVariants}
+    />
+  )
 }

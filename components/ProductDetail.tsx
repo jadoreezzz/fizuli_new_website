@@ -12,12 +12,13 @@ interface ProductDetailProps {
   product: Product
   recommended?: Product[]
   colorVariants?: Product[]
+  recommendedColorVariants?: Map<string, { id: string; slug: string; color: string | null }[]>
 }
 
 const TABS = ['ИНФОРМАЦИЯ О ТОВАРЕ', 'ДОСТАВКА И ВОЗВРАТ'] as const
 
 
-export default function ProductDetail({ product, recommended = [], colorVariants = [] }: ProductDetailProps) {
+export default function ProductDetail({ product, recommended = [], colorVariants = [], recommendedColorVariants }: ProductDetailProps) {
   const images = (product.images ?? []).slice(0, 5)
   const variants = product.product_variants ?? []
 
@@ -266,7 +267,11 @@ export default function ProductDetail({ product, recommended = [], colorVariants
           </p>
           <div className="grid grid-cols-2 gap-x-0 gap-y-16 md:grid-cols-3 lg:grid-cols-4">
             {recommended.map((p) => (
-              <ProductCard key={p.id} product={p} />
+              <ProductCard
+                key={p.id}
+                product={p}
+                colorVariants={p.model_slug ? recommendedColorVariants?.get(p.model_slug) : undefined}
+              />
             ))}
           </div>
         </div>
