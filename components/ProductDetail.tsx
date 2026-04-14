@@ -17,7 +17,7 @@ const TABS = ['ИНФОРМАЦИЯ О ТОВАРЕ', 'ДОСТАВКА И ВО�
 
 
 export default function ProductDetail({ product, recommended = [], colorVariants = [] }: ProductDetailProps) {
-  const images = product.images ?? []
+  const images = (product.images ?? []).slice(0, 5)
   const variants = product.product_variants ?? []
 
   const [selectedSize, setSelectedSize] = useState<string | null>(null)
@@ -30,12 +30,6 @@ export default function ProductDetail({ product, recommended = [], colorVariants
 
   // editorial images = everything after the first
   const editorialImages = images.slice(1)
-
-  // group into chunks of 3: [left-top, left-bottom, right-tall]
-  const groups: string[][] = []
-  for (let i = 0; i < editorialImages.length; i += 3) {
-    groups.push(editorialImages.slice(i, i + 3))
-  }
 
   return (
     <div className="bg-white min-h-screen">
@@ -253,40 +247,15 @@ export default function ProductDetail({ product, recommended = [], colorVariants
       </div>
 
       {/* EDITORIAL GRID */}
-      {groups.map((group, gi) => {
-        const [a, b, c] = group
-
-        // Full group: 2 left stacked + 1 right tall
-        if (a && b && c) {
-          return (
-            <div key={gi} className="grid grid-cols-2" style={{ gridTemplateRows: '66.67vw 66.67vw' }}>
-              {/* left-top */}
-              <div className="relative bg-[#f5f5f5]" style={{ height: '66.67vw' }}>
-                <Image src={a} alt={product.name} fill sizes="50vw" className="object-cover" />
-              </div>
-              {/* right — spans 2 rows */}
-              <div className="relative bg-[#f5f5f5]" style={{ gridRow: '1 / 3', height: '133.33vw' }}>
-                <Image src={c} alt={product.name} fill sizes="50vw" className="object-cover" />
-              </div>
-              {/* left-bottom */}
-              <div className="relative bg-[#f5f5f5]" style={{ height: '66.67vw' }}>
-                <Image src={b} alt={product.name} fill sizes="50vw" className="object-cover" />
-              </div>
+      {editorialImages.length > 0 && (
+        <div className="grid grid-cols-2">
+          {editorialImages.map((src, i) => (
+            <div key={i} className="relative aspect-[3/4] bg-[#f5f5f5]">
+              <Image src={src} alt={product.name} fill sizes="50vw" className="object-cover" />
             </div>
-          )
-        }
-
-        // Partial group — just render remaining side by side
-        return (
-          <div key={gi} className="grid grid-cols-2">
-            {group.map((src, i) => (
-              <div key={i} className="relative aspect-[3/4] bg-[#f5f5f5]">
-                <Image src={src} alt={product.name} fill sizes="50vw" className="object-cover" />
-              </div>
-            ))}
-          </div>
-        )
-      })}
+          ))}
+        </div>
+      )}
 
       {/* RECOMMENDED PRODUCTS */}
       {recommended.length > 0 && (
