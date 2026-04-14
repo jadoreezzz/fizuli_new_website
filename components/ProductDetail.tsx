@@ -216,7 +216,31 @@ export default function ProductDetail({ product, recommended = [], colorVariants
 
           <div className="mt-5 text-[12px] leading-6 text-gray-600">
             {activeTab === 0 ? (
-              <p className="whitespace-pre-line">{product.description ?? 'Описание отсутствует.'}</p>
+              <div className="space-y-5">
+                {product.description
+                  ? product.description.split('\n\n').map((block, i) => {
+                      const lines = block.split('\n').filter(Boolean)
+                      if (lines.length === 0) return null
+                      const [heading, ...body] = lines
+                      // Если блок — одна строка без признаков заголовка, рендерим как обычный текст
+                      const isHeading = body.length > 0 || heading.endsWith(':')
+                      if (!isHeading) {
+                        return (
+                          <p key={i} className="text-gray-500 leading-6">{heading}</p>
+                        )
+                      }
+                      return (
+                        <div key={i}>
+                          <p className="text-[12px] uppercase tracking-widest text-black mb-2">{heading.replace(/:$/, '')}</p>
+                          {body.map((line, j) => (
+                            <p key={j} className="text-gray-500 leading-6">{line}</p>
+                          ))}
+                        </div>
+                      )
+                    })
+                  : <p className="text-gray-500">Описание отсутствует.</p>
+                }
+              </div>
             ) : (
               <div className="space-y-5">
                 <div>
