@@ -7,6 +7,7 @@ import { Product } from '@/types'
 import { COLOR_MAP, isLightColor } from '@/lib/colors'
 import { useCart } from '@/lib/cart'
 import ProductCard from '@/components/ProductCard'
+import SizeGuideModal from '@/components/SizeGuideModal'
 
 interface ProductDetailProps {
   product: Product
@@ -26,7 +27,10 @@ export default function ProductDetail({ product, recommended = [], colorVariants
   const [activeTab, setActiveTab] = useState<0 | 1>(0)
   const [qty, setQty] = useState(1)
   const [added, setAdded] = useState(false)
+  const [sizeGuideOpen, setSizeGuideOpen] = useState(false)
   const { addItem } = useCart()
+
+  const hasSizeGuide = product.model_slug?.startsWith('kostyum-sportivnyy-iz-zhatoy-tkani')
 
   const price = new Intl.NumberFormat('ru-RU', { maximumFractionDigits: 0 }).format(product.price) + ' р.'
 
@@ -34,6 +38,7 @@ export default function ProductDetail({ product, recommended = [], colorVariants
   const editorialImages = images.slice(1)
 
   return (
+    <>
     <div className="bg-white min-h-screen">
 
       {/* TOP SECTION — main image + info panel */}
@@ -108,9 +113,14 @@ export default function ProductDetail({ product, recommended = [], colorVariants
           <div>
             <div className="flex items-center justify-between mb-3">
               <p className="text-[12px] uppercase tracking-widest text-gray-400">Размер</p>
-              <button className="text-[12px] uppercase tracking-widest text-gray-400 underline underline-offset-2">
-                Таблица размеров
-              </button>
+              {hasSizeGuide && (
+                <button
+                  onClick={() => setSizeGuideOpen(true)}
+                  className="text-[12px] uppercase tracking-widest text-gray-400 underline underline-offset-2 hover:text-black transition-colors"
+                >
+                  Таблица размеров
+                </button>
+              )}
             </div>
             <div className="flex flex-wrap gap-1">
               {variants.map((v) => {
@@ -278,5 +288,7 @@ export default function ProductDetail({ product, recommended = [], colorVariants
       )}
 
     </div>
+    {sizeGuideOpen && <SizeGuideModal onClose={() => setSizeGuideOpen(false)} />}
+    </>
   )
 }
