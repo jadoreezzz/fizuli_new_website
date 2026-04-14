@@ -6,6 +6,7 @@ import { useState } from 'react'
 import { Product } from '@/types'
 import { COLOR_MAP, isLightColor } from '@/lib/colors'
 import { useCart } from '@/lib/cart'
+import ProductCard from '@/components/ProductCard'
 
 interface ProductDetailProps {
   product: Product
@@ -264,37 +265,9 @@ export default function ProductDetail({ product, recommended = [], colorVariants
             Рекомендуем
           </p>
           <div className="grid grid-cols-2 gap-x-0 gap-y-16 md:grid-cols-3 lg:grid-cols-4">
-            {recommended.map((p) => {
-              const img = p.images?.[0] ?? null
-              const recPrice = new Intl.NumberFormat('ru-RU', { maximumFractionDigits: 0 }).format(p.price) + ' р.'
-
-              return (
-                <Link key={p.id} href={`/catalog/${p.slug}`} className="group block">
-                  <div className="relative aspect-[3/4] bg-[#f5f5f5] overflow-hidden">
-                    {img && (
-                      <Image
-                        src={img}
-                        alt={p.name}
-                        fill
-                        sizes="25vw"
-                        className="object-cover transition-transform duration-200 ease-in-out group-hover:scale-115"
-                      />
-                    )}
-                  </div>
-                  <div className="mt-3 flex items-start justify-between gap-2 px-3">
-                    <div className="min-w-0">
-                      <p className="text-[12px] uppercase tracking-widest text-gray-400 truncate">
-                        {p.categories?.name ?? ''}
-                      </p>
-                      <p className="mt-0.5 text-[12px] tracking-wide text-gray-900 truncate">
-                        {p.name}
-                      </p>
-                    </div>
-                    <p className="shrink-0 text-[12px] tracking-wide text-gray-900">{recPrice}</p>
-                  </div>
-                </Link>
-              )
-            })}
+            {recommended.map((p) => (
+              <ProductCard key={p.id} product={p} />
+            ))}
           </div>
         </div>
       )}
