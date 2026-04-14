@@ -19,7 +19,7 @@ export default function Header({ transparent = false }: HeaderProps) {
 
   return (
     <header className={`flex items-center justify-between px-6 h-12 border-b transition-colors duration-300 ${
-      transparent ? 'bg-transparent border-transparent' : 'bg-white/70 border-gray-100 backdrop-blur-md'
+      transparent ? 'bg-transparent border-transparent' : 'bg-white border-gray-100'
     }`}>
       {/* Left nav */}
       <nav className="hidden md:flex items-center gap-7">

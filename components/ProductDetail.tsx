@@ -216,7 +216,7 @@ export default function ProductDetail({ product, recommended = [], colorVariants
 
           <div className="mt-5 text-[12px] leading-6 text-gray-600">
             {activeTab === 0 ? (
-              <p>{product.description ?? 'Описание отсутствует.'}</p>
+              <p className="whitespace-pre-line">{product.description ?? 'Описание отсутствует.'}</p>
             ) : (
               <div className="space-y-5">
                 <div>
