@@ -7,7 +7,7 @@ export const revalidate = 60
 export default async function CartPage() {
   const { data } = await supabase
     .from('products')
-    .select('*, categories(id, name, slug)')
+    .select('*, categories(id, name, slug), product_variants(id, size, stock)')
     .order('created_at', { ascending: false })
     .limit(4)
 

@@ -23,10 +23,10 @@ export default function CartContent({ recommended }: CartContentProps) {
     new Intl.NumberFormat('ru-RU', { maximumFractionDigits: 0 }).format(n) + ' р.'
 
   return (
-    <main className="bg-white min-h-screen">
+    <main className="bg-[#fffffd] min-h-screen">
       {/* Header row */}
       <div className="px-6 md:px-10 pt-10 pb-6 flex items-baseline justify-between border-b border-gray-100">
-        <h1 className="text-[13px] uppercase tracking-[0.25em] font-medium">
+        <h1 className="text-[16px] uppercase tracking-[0.25em] font-medium">
           Корзина
           {items.length > 0 && (
             <span className="ml-2 text-gray-400">({items.length})</span>
@@ -50,8 +50,8 @@ export default function CartContent({ recommended }: CartContentProps) {
       {items.length === 0 ? (
         /* ── EMPTY STATE ── */
         <div className="flex flex-col items-center justify-center py-32 gap-6">
-          <p className="text-[13px] uppercase tracking-[0.2em] font-medium">Ваша корзина пуста</p>
-          <p className="text-[12px] text-gray-400 text-center leading-relaxed">
+          <p className="text-[16px] uppercase tracking-[0.2em] font-medium">Ваша корзина пуста</p>
+          <p className="text-[14px] text-gray-400 text-center leading-relaxed">
             Вы пока ничего не добавили в вашу корзину.
           </p>
           <Link
@@ -91,7 +91,7 @@ export default function CartContent({ recommended }: CartContentProps) {
                   <div key={`${entry.productId}::${entry.size}`} className="py-6 flex gap-5">
                     {/* Image */}
                     <Link href={`/catalog/${entry.slug}`} className="shrink-0">
-                      <div className="relative w-48 h-64 bg-[#f5f5f5] overflow-hidden">
+                      <div className="relative w-48 h-64 bg-[#fffffd] overflow-hidden">
                         {entry.image && (
                           <Image
                             src={entry.image}
@@ -106,7 +106,7 @@ export default function CartContent({ recommended }: CartContentProps) {
 
                     {/* Info */}
                     <div className="flex-1 min-w-0 flex flex-col gap-1.5">
-                      <Link href={`/catalog/${entry.slug}`} className="text-[12px] tracking-wide text-black hover:text-gray-500 transition-colors truncate">
+                      <Link href={`/catalog/${entry.slug}`} className="text-[14px] tracking-wide text-black hover:text-gray-500 transition-colors truncate">
                         {entry.name}
                       </Link>
                       <p className="text-[11px] uppercase tracking-widest text-gray-400">
@@ -134,7 +134,7 @@ export default function CartContent({ recommended }: CartContentProps) {
                           >
                             −
                           </button>
-                          <span className="text-[12px] w-4 text-center">{entry.quantity}</span>
+                          <span className="text-[14px] w-4 text-center">{entry.quantity}</span>
                           <button
                             onClick={() => updateQuantity(entry.productId, entry.size, 1)}
                             className="w-8 h-8 flex items-center justify-center text-[14px] text-gray-500 hover:text-black transition-colors"
@@ -142,7 +142,7 @@ export default function CartContent({ recommended }: CartContentProps) {
                             +
                           </button>
                         </div>
-                        <p className="text-[12px] tracking-wide">{fmt(entry.price * entry.quantity)}</p>
+                        <p className="text-[14px] tracking-wide">{fmt(entry.price * entry.quantity)}</p>
                       </div>
                     </div>
 
@@ -183,7 +183,7 @@ export default function CartContent({ recommended }: CartContentProps) {
       {/* ДОПОЛНИТЬ ОБРАЗ */}
       {recommended.length > 0 && (
         <div className="pb-16">
-          <p className="text-center text-[12px] uppercase tracking-[0.25em] text-gray-400 mb-10">
+          <p className="text-center text-[16px] uppercase tracking-[0.25em] text-black mb-10">
             Дополнить образ
           </p>
           <div className="grid grid-cols-2 gap-x-0 gap-y-16 md:grid-cols-3 lg:grid-cols-4">

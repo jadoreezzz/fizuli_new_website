@@ -7,7 +7,7 @@ export const revalidate = 60
 export default async function CatalogPage() {
   const { data: products, error } = await supabase
     .from('products')
-    .select('*, categories(id, name, slug)')
+    .select('*, categories(id, name, slug), product_variants(id, size, stock)')
     .order('created_at', { ascending: false })
 
   if (error) {
@@ -26,9 +26,9 @@ export default async function CatalogPage() {
   }
 
   return (
-    <main className="bg-white min-h-screen">
+    <main className="bg-[#fffffd] min-h-screen">
       <div className="px-6 py-16">
-        <h1 className="text-[12px] uppercase tracking-[0.2em] text-gray-400 mb-14">
+        <h1 className="text-[16px] uppercase tracking-[0.2em] text-gray-400 mb-14">
           Каталог
         </h1>
       </div>

@@ -28,13 +28,13 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ru" className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}>
-      <body className="min-h-full flex flex-col bg-white">
+      <body className="min-h-full flex flex-col bg-[#fffffd]">
         <CartProvider>
           <StickyNav />
           <div className="flex-1">
             {children}
           </div>
-          <div className="h-32 bg-white" />
+          <div className="h-32 bg-[#fffffd]" />
           <Footer />
           <ScrollToTop />
         </CartProvider>

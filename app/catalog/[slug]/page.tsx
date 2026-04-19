@@ -46,7 +46,7 @@ export default async function ProductPage({ params }: PageProps) {
   // Fetch 4 recommended products (same category, excluding current)
   const { data: recommended } = await supabase
     .from('products')
-    .select('*, categories(id, name, slug)')
+    .select('*, categories(id, name, slug), product_variants(id, size, stock)')
     .eq('category_id', product.category_id ?? '')
     .neq('id', product.id)
     .limit(4)
@@ -56,7 +56,7 @@ export default async function ProductPage({ params }: PageProps) {
   if (recommendedProducts.length < 4) {
     const { data: others } = await supabase
       .from('products')
-      .select('*, categories(id, name, slug)')
+      .select('*, categories(id, name, slug), product_variants(id, size, stock)')
       .neq('id', product.id)
       .not('id', 'in', `(${recommendedProducts.map(p => p.id).join(',')})`)
       .limit(4 - recommendedProducts.length)

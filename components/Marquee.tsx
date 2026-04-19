@@ -12,13 +12,13 @@ export default function Marquee({ onDismiss }: MarqueeProps) {
     <div className="relative w-full bg-black flex items-center h-7 overflow-hidden">
       <div className="flex items-center whitespace-nowrap animate-marquee">
         {items.map((item, i) => (
-          <span key={i} className="flex items-center text-white text-[10px] uppercase tracking-widest shrink-0">
+          <span key={i} className="flex items-center text-white text-[13px] uppercase tracking-widest shrink-0">
             <span className="mx-6">{item}</span>
             <span className="text-white/30 leading-none">·</span>
           </span>
         ))}
         {items.map((item, i) => (
-          <span key={`dup-${i}`} className="flex items-center text-white text-[10px] uppercase tracking-widest shrink-0">
+          <span key={`dup-${i}`} className="flex items-center text-white text-[13px] uppercase tracking-widest shrink-0">
             <span className="mx-6">{item}</span>
             <span className="text-white/30 leading-none">·</span>
           </span>

@@ -2,48 +2,58 @@ import Link from 'next/link'
 
 export default function Footer() {
   return (
-    <footer className="bg-black text-white mt-24">
-      <div className="px-8 py-16 grid grid-cols-2 md:grid-cols-4 gap-12">
-        {/* Logo */}
-        <div>
-          <span className="text-[12px] uppercase tracking-[0.3em] font-medium">FIZULI</span>
-        </div>
+    <footer className="bg-[#fffffd]">
+      <div className="px-8 py-16">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-12">
 
-        {/* Spacer on desktop */}
-        <div className="hidden md:block" />
+          {/* Logo + Contacts */}
+          <div>
+            <p className="text-[11px] uppercase tracking-widest text-gray-500 mb-4">Контакты</p>
+            <div className="flex flex-col gap-2">
+              <a href="tel:+79936264234" className="text-[14px] text-gray-900 hover:text-black transition-colors">
+                +7 (993) 626-42-34
+              </a>
+              <a href="mailto:fizuliwear@mail.ru" className="text-[14px] text-gray-900 hover:text-black transition-colors">
+                fizuliwear@mail.ru
+              </a>
+              <p className="text-[14px] text-gray-600 leading-relaxed">
+                Москва, ТЦ Мозайка<br />7-я Кожуховская, 9
+              </p>
+            </div>
+          </div>
 
-        {/* Help */}
-        <div>
-          <p className="text-[12px] uppercase tracking-widest text-gray-500 mb-5">Помощь</p>
-          <nav className="flex flex-col gap-3">
-            <Link href="/contact" className="text-[12px] text-gray-400 hover:text-white transition-colors tracking-wide">Контакты</Link>
-            <Link href="/about" className="text-[12px] text-gray-400 hover:text-white transition-colors tracking-wide">О нас</Link>
-            <Link href="/shipping" className="text-[12px] text-gray-400 hover:text-white transition-colors tracking-wide">Доставка и возврат</Link>
-            <Link href="/terms" className="text-[12px] text-gray-400 hover:text-white transition-colors tracking-wide">Условия</Link>
-          </nav>
-        </div>
+          {/* Spacer */}
+          <div className="hidden md:block" />
 
-        {/* Info */}
-        <div>
-          <p className="text-[12px] uppercase tracking-widest text-gray-500 mb-5">Инфо</p>
-          <nav className="flex flex-col gap-3">
-            <Link href="/collections" className="text-[12px] text-gray-400 hover:text-white transition-colors tracking-wide">Коллекции</Link>
-            <Link href="/catalog" className="text-[12px] text-gray-400 hover:text-white transition-colors tracking-wide">Каталог</Link>
-          </nav>
+          {/* Помощь */}
+          <div>
+            <p className="text-[11px] uppercase tracking-widest text-gray-500 mb-4">Помощь</p>
+            <nav className="flex flex-col gap-2.5">
+              <Link href="/contact" className="text-[14px] text-gray-900 hover:text-black transition-colors">Контакты</Link>
+              <Link href="/about" className="text-[14px] text-gray-900 hover:text-black transition-colors">О нас</Link>
+              <Link href="/shipping" className="text-[14px] text-gray-900 hover:text-black transition-colors">Доставка и возврат</Link>
+              <Link href="/terms" className="text-[14px] text-gray-900 hover:text-black transition-colors">Условия</Link>
+            </nav>
+          </div>
+
+          {/* Каталог */}
+          <div>
+            <p className="text-[11px] uppercase tracking-widest text-gray-500 mb-4">Каталог</p>
+            <nav className="flex flex-col gap-2.5">
+              <Link href="/collections" className="text-[14px] text-gray-900 hover:text-black transition-colors">Коллекции</Link>
+              <Link href="/catalog" className="text-[14px] text-gray-900 hover:text-black transition-colors">Все товары</Link>
+            </nav>
+          </div>
+
         </div>
       </div>
 
       {/* Bottom bar */}
-      <div className="border-t border-white/10 px-8 py-5 flex items-center justify-between">
-        <p className="text-[12px] text-gray-600 tracking-wide">© 2026 FIZULI</p>
-        <div className="flex items-center gap-5">
-          <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className="text-[12px] uppercase tracking-widest text-gray-500 hover:text-white transition-colors">
-            Instagram
-          </a>
-          <a href="https://tiktok.com" target="_blank" rel="noopener noreferrer" className="text-[12px] uppercase tracking-widest text-gray-500 hover:text-white transition-colors">
-            TikTok
-          </a>
-        </div>
+      <div className="px-8 py-5 flex flex-col md:flex-row items-start md:items-center justify-between gap-3">
+        <p className="text-[11px] text-gray-500 tracking-wide">© 2026 FIZULI</p>
+        <p className="text-[11px] text-gray-500 leading-relaxed text-right">
+          ИП Васильичев Павел Олегович&nbsp;&nbsp;·&nbsp;&nbsp;ИНН 370228045114&nbsp;&nbsp;·&nbsp;&nbsp;ОГРНИП 321370200033167
+        </p>
       </div>
     </footer>
   )

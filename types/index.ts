@@ -30,6 +30,7 @@ export interface Product {
   collection_id: string | null
   color: string | null
   model_slug: string | null
+  article: string | null
   created_at: string
   categories: Category | null
   product_variants?: ProductVariant[]
